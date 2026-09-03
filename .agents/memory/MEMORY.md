@@ -1,0 +1,1 @@
+- [API schema generation](api-schema-generation.md) — OpenAPI integer fields need compatibility care with the workspace's Zod generator.

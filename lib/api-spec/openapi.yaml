@@ -10,6 +10,10 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: products
+    description: Storefront products and admin product management
+  - name: store
+    description: Storefront summaries
 paths:
   /healthz:
     get:
@@ -24,7 +28,141 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /products:
+    get:
+      operationId: listProducts
+      tags: [products]
+      summary: List dessert products
+      parameters:
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: featured
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: available
+          in: query
+          required: false
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Product list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+    post:
+      operationId: createProduct
+      tags: [products]
+      summary: Add a dessert product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductInput"
+      responses:
+        "201":
+          description: Product created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+  /products/{id}:
+    get:
+      operationId: getProduct
+      tags: [products]
+      summary: Get a dessert product
+      parameters:
+        - $ref: "#/components/parameters/ProductId"
+      responses:
+        "200":
+          description: Product
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          description: Product not found
+    patch:
+      operationId: updateProduct
+      tags: [products]
+      summary: Update a dessert product
+      parameters:
+        - $ref: "#/components/parameters/ProductId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductUpdate"
+      responses:
+        "200":
+          description: Product updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          description: Product not found
+    delete:
+      operationId: deleteProduct
+      tags: [products]
+      summary: Remove a dessert product
+      parameters:
+        - $ref: "#/components/parameters/ProductId"
+      responses:
+        "204":
+          description: Product removed
+        "404":
+          description: Product not found
+  /categories:
+    get:
+      operationId: listCategories
+      tags: [store]
+      summary: List dessert categories
+      responses:
+        "200":
+          description: Category summary list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CategorySummary"
+  /store-summary:
+    get:
+      operationId: getStoreSummary
+      tags: [store]
+      summary: Get storefront summary
+      responses:
+        "200":
+          description: Storefront summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StoreSummary"
 components:
+  parameters:
+    ProductId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: number
+        minimum: 1
   schemas:
     HealthStatus:
       type: object
@@ -33,4 +171,135 @@ components:
           type: string
       required:
         - status
+    Product:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        slug:
+          type: string
+        category:
+          type: string
+        price:
+          type: number
+        description:
+          type: string
+        imageUrl:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        featured:
+          type: boolean
+        available:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - name
+        - slug
+        - category
+        - price
+        - description
+        - imageUrl
+        - tags
+        - featured
+        - available
+        - createdAt
+    ProductInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        slug:
+          type: string
+          minLength: 1
+        category:
+          type: string
+          minLength: 1
+        price:
+          type: number
+          minimum: 0
+        description:
+          type: string
+          minLength: 1
+        imageUrl:
+          type: string
+          minLength: 1
+        tags:
+          type: array
+          items:
+            type: string
+        featured:
+          type: boolean
+        available:
+          type: boolean
+      required:
+        - name
+        - slug
+        - category
+        - price
+        - description
+        - imageUrl
+    ProductUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        slug:
+          type: string
+          minLength: 1
+        category:
+          type: string
+          minLength: 1
+        price:
+          type: number
+          minimum: 0
+        description:
+          type: string
+          minLength: 1
+        imageUrl:
+          type: string
+          minLength: 1
+        tags:
+          type: array
+          items:
+            type: string
+        featured:
+          type: boolean
+        available:
+          type: boolean
+    CategorySummary:
+      type: object
+      properties:
+        category:
+          type: string
+        count:
+          type: number
+        imageUrl:
+          type: string
+      required:
+        - category
+        - count
+        - imageUrl
+    StoreSummary:
+      type: object
+      properties:
+        productCount:
+          type: number
+        categoryCount:
+          type: number
+        featuredCount:
+          type: number
+      required:
+        - productCount
+        - categoryCount
+        - featuredCount
 
