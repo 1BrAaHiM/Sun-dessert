@@ -1,1 +1,2 @@
 - [API schema generation](api-schema-generation.md) — OpenAPI integer fields need compatibility care with the workspace's Zod generator.
+- [Angular template constraints](angular-template-constraints.md) — Keep arrow-function filtering and lookups out of strict Angular templates.

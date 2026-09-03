@@ -1,0 +1,53 @@
+:root {
+  --cream: #fffaf1;
+  --paper: #fffdf9;
+  --peach: #f8e2bc;
+  --sun: #f5ba4c;
+  --coral: #c46135;
+  --cacao: #683b20;
+  --muted: #8f7561;
+  --sage: #d9e1b6;
+  --blush: #edc5b4;
+  --lavender: #e5d3e8;
+  --line: rgba(104, 59, 32, .14);
+  --line-strong: rgba(104, 59, 32, .28);
+  --serif: "Playfair Display", Georgia, serif;
+  --sans: "DM Sans", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--cream);
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--cream);
+  color: var(--cacao);
+  font-family: var(--sans);
+  margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(196, 97, 53, .35);
+  outline-offset: 3px;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}

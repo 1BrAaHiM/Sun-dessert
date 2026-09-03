@@ -1,0 +1,107 @@
+<ng-container [ngSwitch]="page">
+  <section *ngSwitchCase="'home'" class="home-page">
+    <div class="hero page-width">
+      <div class="hero-copy">
+        <span class="eyebrow">Baked in the sunshine</span>
+        <h1>A little <em>sweetness</em> for your day.</h1>
+        <p>Warm brownies, celebration cakes, and dessert boxes made by hand in the heart of Shibin El Kom.</p>
+        <div class="hero-actions">
+          <a class="button button-dark" routerLink="/products">Explore the counter <span>→</span></a>
+          <a class="button button-outline" routerLink="/order">How to order</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img src="/assets/hazelnut%20brownie.png" alt="Sun Dessert hazelnut brownies" (error)="onImageError($event)" />
+        <span class="photo-sticker">Made<br />with love</span>
+        <div class="photo-note"><strong>Baked for sharing</strong><small>or keeping all to yourself</small></div>
+      </div>
+    </div>
+
+    <div class="proof-strip page-width">
+      <div><strong>{{ availableProducts.length || 6 }}+</strong><span>sweet treats</span></div>
+      <div><strong>100%</strong><span>made fresh</span></div>
+      <div><strong>{{ categoryCards.length }}</strong><span>ways to indulge</span></div>
+    </div>
+
+    <section class="section page-width">
+      <div class="section-heading">
+        <div><span class="eyebrow">From the counter</span><h2>Find your favorite.</h2></div>
+        <a routerLink="/products" class="text-link">See everything <span>→</span></a>
+      </div>
+      <div *ngIf="loading" class="product-grid loading-grid"><div *ngFor="let item of [1,2,3,4]" class="skeleton-card"></div></div>
+      <div *ngIf="!loading && featuredProducts.length" class="product-grid">
+        <article *ngFor="let product of featuredProducts; trackBy: trackById" class="product-card" (click)="openProduct(product)">
+          <div class="product-image"><img [src]="product.imageUrl" [alt]="product.name" (error)="onImageError($event)" /><span class="product-badge">Sun favorite</span></div>
+          <div class="product-info"><div><h3>{{ product.name }}</h3><p>{{ product.category }}</p></div><strong>{{ product.price | number:'1.0-0' }} EGP</strong></div>
+        </article>
+      </div>
+      <div *ngIf="!loading && !featuredProducts.length" class="empty-state">The counter is being refreshed. Check back soon.</div>
+    </section>
+
+    <section class="category-band">
+      <div class="page-width">
+        <div class="section-heading"><div><span class="eyebrow">Something for everyone</span><h2>Browse by mood.</h2></div></div>
+        <div class="category-grid">
+          <a *ngFor="let category of categoryCards" [routerLink]="['/category', category.slug]" class="category-card">
+            <img [src]="category.imageUrl" [alt]="category.name" (error)="onImageError($event)" />
+            <div><strong>{{ category.name }}</strong><span>{{ category.count }} treats <b>→</b></span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <section *ngSwitchCase="'about'" class="simple-page page-width about-page">
+    <div class="page-intro"><span class="eyebrow">A little about us</span><h1>Made for the<br /><em>sweet moments.</em></h1><p>Sun Dessert is a small-batch dessert kitchen in Elmenoufia, creating treats that make ordinary days feel worth celebrating.</p></div>
+    <div class="about-grid"><img src="/assets/celebrate.jpg" alt="A Sun Dessert celebration treat" (error)="onImageError($event)" /><div class="about-note"><span class="eyebrow">Our little kitchen</span><h2>Good things take time.</h2><p>Every brownie, cake, and box is made after you order, with generous ingredients and careful attention to the small details.</p><p>Whether it is a quiet afternoon treat or a full celebration, we make desserts that feel personal, warm, and worth sharing.</p><a class="button button-dark" routerLink="/products">Visit the counter <span>→</span></a></div></div>
+  </section>
+
+  <section *ngSwitchCase="'products'" class="listing-page page-width">
+    <div class="page-intro compact"><span class="eyebrow">The full counter</span><h1>Pick your <em>pleasure.</em></h1><p>Every box is made to order, wrapped with care, and best enjoyed while the chocolate is still soft.</p></div>
+    <div class="listing-tools"><label class="search-box"><span>⌕</span><input type="search" [(ngModel)]="searchTerm" placeholder="Search the counter" aria-label="Search products" /></label><div class="filter-row"><a routerLink="/products" [class.active]="!categorySlug">Everything</a><a *ngFor="let category of categories" [routerLink]="['/category', category.slug]">{{ category.name }}</a></div></div>
+    <div *ngIf="loading" class="product-grid loading-grid"><div *ngFor="let item of [1,2,3,4]" class="skeleton-card"></div></div>
+    <div *ngIf="!loading && visibleProducts.length" class="product-grid"><article *ngFor="let product of visibleProducts; trackBy: trackById" class="product-card" (click)="openProduct(product)"><div class="product-image"><img [src]="product.imageUrl" [alt]="product.name" (error)="onImageError($event)" /><span class="product-badge">{{ product.category }}</span></div><div class="product-info"><div><h3>{{ product.name }}</h3><p>{{ product.description }}</p></div><strong>{{ product.price | number:'1.0-0' }} EGP</strong></div></article></div>
+    <div *ngIf="!loading && !visibleProducts.length" class="empty-state"><h3>Nothing on this shelf yet.</h3><p>Try another search or browse everything.</p><a routerLink="/products" class="text-link">Reset the counter <span>→</span></a></div>
+  </section>
+
+  <section *ngSwitchCase="'category'" class="listing-page page-width">
+    <div class="page-intro compact"><a routerLink="/products" class="back-link">← All products</a><span class="eyebrow">The {{ categoryName.toLowerCase() }} shelf</span><h1>{{ pageTitle }} <em>for you.</em></h1><p>{{ categoryNote }}.</p></div>
+    <div class="category-toolbar"><span>{{ visibleProducts.length }} treats on the shelf</span><a routerLink="/order" class="text-link">Need a custom order? <span>→</span></a></div>
+    <div *ngIf="loading" class="product-grid loading-grid"><div *ngFor="let item of [1,2,3,4]" class="skeleton-card"></div></div>
+    <div *ngIf="!loading && visibleProducts.length" class="product-grid"><article *ngFor="let product of visibleProducts; trackBy: trackById" class="product-card" (click)="openProduct(product)"><div class="product-image"><img [src]="product.imageUrl" [alt]="product.name" (error)="onImageError($event)" /><span class="product-badge">{{ product.category }}</span></div><div class="product-info"><div><h3>{{ product.name }}</h3><p>{{ product.description }}</p></div><strong>{{ product.price | number:'1.0-0' }} EGP</strong></div></article></div>
+    <div *ngIf="!loading && !visibleProducts.length" class="empty-state"><h3>This shelf is getting ready.</h3><p>Message us on WhatsApp for today's fresh options.</p></div>
+  </section>
+
+  <section *ngSwitchCase="'detail'" class="detail-page page-width">
+    <a routerLink="/products" class="back-link">← Back to the counter</a>
+    <div *ngIf="detailLoading" class="detail-loading"><div class="skeleton-detail"></div><div class="skeleton-copy"></div></div>
+    <div *ngIf="!detailLoading && selectedProduct as product; else detailEmpty" class="detail-layout">
+      <div class="detail-image"><img [src]="product.imageUrl" [alt]="product.name" (error)="onImageError($event)" /></div>
+      <div class="detail-copy"><div class="tag-row"><span class="product-badge">{{ product.category }}</span><span class="product-badge soft">Sun favorite</span></div><h1>{{ product.name }}</h1><p class="detail-description">{{ product.description }}</p><div class="detail-price">{{ product.price | number:'1.0-0' }} EGP <small>per piece / box</small></div><div class="order-line"><div class="quantity"><button type="button" (click)="decreaseQuantity()" aria-label="Decrease quantity">−</button><span>{{ quantity }}</span><button type="button" (click)="increaseQuantity()" aria-label="Increase quantity">+</button></div><button type="button" class="button button-dark order-button" (click)="startOrder(product)">Order on WhatsApp <span>→</span></button></div><p class="fresh-note">✓ Freshly prepared after confirmation</p><div class="detail-tags"><span *ngFor="let tag of product.tags">{{ tag }}</span></div></div>
+    </div>
+    <ng-template #detailEmpty><div class="empty-state"><h3>This dessert is not on the counter.</h3><a routerLink="/products" class="text-link">See all products <span>→</span></a></div></ng-template>
+  </section>
+
+  <section *ngSwitchCase="'order'" class="simple-page page-width order-page">
+    <div class="page-intro"><span class="eyebrow">Made to order</span><h1>Let’s make your<br /><em>day sweeter.</em></h1><p>Choose your treats from the counter, then send us a WhatsApp message. We will confirm the details, timing, and delivery options with you.</p><a class="button button-dark" href="https://wa.me/201129939015" target="_blank" rel="noreferrer">Start an order <span>→</span></a></div>
+    <div class="order-steps"><div><span>01</span><h2>Choose your treats</h2><p>Browse the counter and open any dessert for its details.</p></div><div><span>02</span><h2>Message us</h2><p>Use the order button to send your selection directly on WhatsApp.</p></div><div><span>03</span><h2>Enjoy the moment</h2><p>We prepare it fresh and confirm pickup or delivery around Shibin El Kom.</p></div></div>
+  </section>
+
+  <section *ngSwitchCase="'admin'" class="admin-page page-width">
+    <div class="admin-header"><div><span class="eyebrow">The kitchen</span><h1>The counter, <em>your way.</em></h1><p>Manage what customers see in the Sun Dessert storefront.</p></div><button type="button" class="button button-dark" (click)="openAddForm()">+ Add product</button></div>
+    <div *ngIf="adminMessage" class="admin-message">{{ adminMessage }}</div>
+    <div *ngIf="loading" class="admin-loading">Loading the counter…</div>
+    <div *ngIf="!loading" class="admin-stats"><div><span>Products</span><strong>{{ products.length }}</strong></div><div><span>Featured</span><strong>{{ featuredCount }}</strong></div><div><span>Categories</span><strong>{{ categoryCards.length }}</strong></div></div>
+    <div *ngIf="!loading" class="admin-list"><div *ngFor="let product of products; trackBy: trackById" class="admin-row"><img [src]="product.imageUrl" [alt]="product.name" (error)="onImageError($event)" /><div class="admin-product-info"><h3>{{ product.name }} <span *ngIf="product.featured" class="mini-badge">Featured</span></h3><p>{{ product.category }} · {{ product.price | number:'1.0-0' }} EGP <span [class.unavailable]="!product.available">{{ product.available ? '· Visible' : '· Hidden' }}</span></p></div><div class="admin-actions"><button type="button" (click)="toggleAvailability(product)">{{ product.available ? 'Hide' : 'Show' }}</button><button type="button" (click)="toggleFeatured(product)">{{ product.featured ? 'Unfeature' : 'Feature' }}</button><button type="button" class="icon-button" (click)="openEditForm(product)" aria-label="Edit product">Edit</button><button type="button" class="icon-button danger" (click)="removeProduct(product)" aria-label="Remove product">Delete</button></div></div></div>
+    <div *ngIf="!loading && !products.length" class="empty-state"><h3>Your counter is empty.</h3><p>Add your first dessert to start building the storefront.</p><button type="button" class="button button-dark" (click)="openAddForm()">Add the first product</button></div>
+  </section>
+</ng-container>
+
+<div *ngIf="formOpen" class="modal-backdrop" (click)="closeForm()">
+  <form class="product-form" (ngSubmit)="saveProduct()" (click)="stopPropagation($event)">
+    <div class="form-heading"><div><span class="eyebrow">{{ editingId === null ? 'New on the counter' : 'Update the counter' }}</span><h2>{{ editingId === null ? 'Add a product' : 'Edit product' }}</h2></div><button type="button" class="close-button" (click)="closeForm()" aria-label="Close form">×</button></div>
+    <div class="form-grid"><label>Name<input name="name" [(ngModel)]="form.name" placeholder="Classic Fudge Brownie" /></label><label>Slug<input name="slug" [(ngModel)]="form.slug" placeholder="classic-fudge-brownie" /></label><label>Category<select name="category" [(ngModel)]="form.category"><option *ngFor="let category of categories" [value]="category.slug">{{ category.name }}</option></select></label><label>Price in EGP<input name="price" type="number" min="0" [(ngModel)]="form.price" /></label><label class="full-field">Image path<input name="imageUrl" [(ngModel)]="form.imageUrl" placeholder="/assets/classic%20brownie.png" /></label><label class="full-field">Description<textarea name="description" rows="3" [(ngModel)]="form.description" placeholder="Describe this sweet treat"></textarea></label><label class="full-field">Tags <small>comma separated</small><input name="tags" [(ngModel)]="form.tags" placeholder="chocolate, best seller" /></label></div>
+    <div class="check-row"><label><input name="featured" type="checkbox" [(ngModel)]="form.featured" /> Featured on home</label><label><input name="available" type="checkbox" [(ngModel)]="form.available" /> Visible to customers</label></div>
+    <p *ngIf="formError" class="form-error">{{ formError }}</p><div class="form-actions"><button type="button" class="button button-outline" (click)="closeForm()">Cancel</button><button type="submit" class="button button-dark" [disabled]="saving">{{ saving ? 'Saving…' : 'Save product' }}</button></div>
+  </form>
+</div>

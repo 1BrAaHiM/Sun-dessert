@@ -1,0 +1,70 @@
+<div class="site-shell">
+  <div class="announcement">Baked fresh in Shibin El Kom · order by WhatsApp</div>
+
+  <header class="site-header">
+    <a class="brand" routerLink="/" (click)="closeMenu()" aria-label="Sun Dessert home">
+      <span class="brand-mark">S</span>
+      <span class="brand-copy"><strong>Sun</strong><small>DESSERT</small></span>
+    </a>
+
+    <button class="mobile-toggle" type="button" (click)="menuOpen = !menuOpen" [attr.aria-expanded]="menuOpen" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="main-nav" [class.is-open]="menuOpen" aria-label="Main navigation">
+      <a routerLink="/about" routerLinkActive="active" (click)="closeMenu()">About Us</a>
+      <div class="products-menu">
+        <a routerLink="/products" routerLinkActive="active" (click)="closeMenu()">Products <span class="chevron">⌄</span></a>
+        <div class="category-sheet">
+          <div class="sheet-intro">
+            <span class="eyebrow">The counter</span>
+            <strong>Pick your pleasure</strong>
+            <span>Small-batch treats for every sweet moment.</span>
+          </div>
+          <a *ngFor="let category of categories" [routerLink]="['/category', category.slug]" (click)="closeMenu()">
+            <span class="category-dot"></span>
+            <span><strong>{{ category.name }}</strong><small>{{ category.note }}</small></span>
+            <span class="sheet-arrow">→</span>
+          </a>
+        </div>
+      </div>
+      <a routerLink="/order" routerLinkActive="active" (click)="closeMenu()">Order</a>
+    </nav>
+
+    <a class="hello-link" [href]="generalWhatsApp" target="_blank" rel="noreferrer">
+      <span class="whatsapp-icon">W</span> Say hello
+    </a>
+  </header>
+
+  <main><router-outlet></router-outlet></main>
+
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand brand-footer" routerLink="/">
+          <span class="brand-mark">S</span>
+          <span class="brand-copy"><strong>Sun</strong><small>DESSERT</small></span>
+        </a>
+        <p>Small-batch desserts, big little moments. Made fresh with a little sunshine in every bite.</p>
+      </div>
+      <div class="footer-column">
+        <span class="eyebrow">Come say hi</span>
+        <p>Elmenoufia, Shibin El Kom, Egypt</p>
+        <a href="tel:01044279407">01044279407</a>
+        <a href="https://wa.me/201044279407" target="_blank" rel="noreferrer">WhatsApp us</a>
+      </div>
+      <div class="footer-column">
+        <span class="eyebrow">Keep in touch</span>
+        <div class="social-links">
+          <a href="https://www.instagram.com/sun_dessert_eg/" target="_blank" rel="noreferrer" aria-label="Instagram">Instagram</a>
+          <a href="https://www.tiktok.com/@sun_dessert_3" target="_blank" rel="noreferrer" aria-label="TikTok">TikTok</a>
+        </div>
+        <span class="footer-small">For orders: 01129939015</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {{ currentYear }} Sun Dessert</span>
+      <span>Freshly made in Elmenoufia</span>
+    </div>
+  </footer>
+</div>

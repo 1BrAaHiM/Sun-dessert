@@ -1,6 +1,6 @@
 # Sun Dessert Store
 
-A dessert storefront for Sun Dessert in Elmenoufia, with WhatsApp ordering and a lightweight product management panel.
+A clean Angular dessert storefront for Sun Dessert in Elmenoufia, ready to connect to a .NET REST backend.
 
 ## Run & Operate
 
@@ -22,11 +22,9 @@ A dessert storefront for Sun Dessert in Elmenoufia, with WhatsApp ordering and a
 
 ## Where things live
 
-- `artifacts/sun-dessert-store` — React storefront, category grids, product detail pages, About, Order, and admin product manager.
-- `artifacts/api-server/src/routes/products.ts` — product CRUD, category summaries, and store summary API routes.
-- `lib/db/src/schema/products.ts` — PostgreSQL/Drizzle product schema.
-- `lib/api-spec/openapi.yaml` — source of truth for the generated API hooks and validation schemas.
+- `artifacts/sun-dessert-store/src/app` — Angular shell, routes, product service, storefront pages, and admin product manager.
 - `artifacts/sun-dessert-store/public/assets` — supplied Sun Dessert product and brand imagery.
+- `artifacts/sun-dessert-store/src/app/product.service.ts` — REST adapter for the .NET backend with local browser fallback for preview use.
 
 ## Architecture decisions
 
@@ -34,10 +32,11 @@ A dessert storefront for Sun Dessert in Elmenoufia, with WhatsApp ordering and a
 - Customer ordering is handled through WhatsApp rather than a cart or payment checkout.
 - Product images are bundled as supplied static assets, while product metadata and availability live in PostgreSQL.
 - The public site keeps navigation focused on About Us, Products/category browsing, and Order.
+- The Angular frontend expects the .NET API to expose `/products`, `/products/{id}`, and the matching POST/PATCH/DELETE operations.
 
 ## Product
 
-Customers can browse featured desserts, search and filter by category, open a bakery-style product detail page, choose a quantity, and send an order request to WhatsApp. The admin can add, edit, feature, hide, and remove products.
+Customers can browse featured desserts, search and filter by category, open a bakery-style product detail page, choose a quantity, and send an order request to WhatsApp. The admin can add, edit, feature, hide, and remove products. The frontend is Angular-only and does not import the internal React client.
 
 ## User preferences
 
@@ -47,8 +46,9 @@ Customers can browse featured desserts, search and filter by category, open a ba
 
 ## Gotchas
 
-- Run `pnpm --filter @workspace/api-spec run codegen` after changing `lib/api-spec/openapi.yaml`.
-- Seeded products are inserted only when the products table is empty.
+- Run `pnpm --filter @workspace/sun-dessert-store run typecheck` to compile the Angular app.
+- Set `window.__SUN_DESSERT_API_URL__` before bootstrapping if the .NET API is hosted at a different base URL than `/api`.
+- The browser fallback data makes the preview usable without a .NET API; successful REST responses replace it and persist in the browser cache.
 
 ## Pointers
 
