@@ -36,16 +36,19 @@
 
 .brand-mark {
   align-items: center;
-  background: var(--sun);
-  border: 2px solid var(--cacao);
-  border-radius: 50%;
+  background-image:url(../../public/assets/logopic.jpg) ;
+  background-size: cover;
+
   display: inline-flex;
   font-family: var(--serif);
   font-size: 25px;
-  height: 43px;
+  height: 63px;
   justify-content: center;
   line-height: 1;
-  width: 43px;
+  width: 63px;
+ border-radius:
+    50% 45% 55% 48% /
+    45% 55% 48% 52%;
 }
 
 .brand-copy {
@@ -192,7 +195,7 @@
 .hello-link {
   align-items: center;
   background: var(--cacao);
-  border-radius: 99px;
+  border-radius: 50% 20% 50% 20% / 0% 50% 0% 50%;
   color: var(--cream);
   display: inline-flex;
   font-size: 12px;
@@ -253,7 +256,7 @@
 
 .footer-brand p {
   color: rgba(255, 250, 241, .68);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.7;
   margin: 22px 0 0;
   max-width: 270px;
@@ -269,17 +272,36 @@
 .footer-column a,
 .footer-small {
   color: rgba(255, 250, 241, .78);
-  font-size: 13px;
+  font-size: 16px;
   margin: 0;
   text-decoration: none;
 }
 
 .footer-column a:hover { color: var(--sun); }
 
+#contacts{
+  display: flex;
+  flex-direction: row;
+  gap:10px;
+  align-items: center;
+ 
+}
+
 .social-links {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+.social-links img{
+  width: 20px;
+  height: 20px;
+  margin-bottom: 5px;
+  
+}
+.social-links a{
+  display: flex;
+  flex-direction: row;
+  gap:10px;
 }
 
 .footer-bottom {

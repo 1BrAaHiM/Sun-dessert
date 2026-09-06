@@ -4,6 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { Product, ProductInput } from "./product.model";
 import { ProductService } from "./product.service";
+import { HeroCarousal } from "./hero-slider.component";
 
 type Page = "home" | "about" | "products" | "category" | "detail" | "order" | "admin";
 
@@ -22,7 +23,7 @@ interface ProductForm {
 @Component({
   selector: "app-store-page",
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink,HeroCarousal],
   templateUrl: "./store-page.component.html",
   styleUrl: "./store-page.component.css",
 })
@@ -111,7 +112,7 @@ export class StorePageComponent implements OnInit {
       };
     });
   }
-
+  
   private syncRoute(): void {
     this.page = (this.route.snapshot.data["page"] as Page | undefined) ?? "home";
     this.categorySlug = this.route.snapshot.paramMap.get("category") ?? "";

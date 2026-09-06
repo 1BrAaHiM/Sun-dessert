@@ -1,0 +1,42 @@
+<section
+  class="hero"
+  [style.background-image]="'url(' + slides[currentSlide].image + ')'"
+>
+  <div class="hero-overlay">
+
+    <!-- Navigation buttons -->
+    <div class="controls">
+
+      <button
+        class="control-btn"
+        (click)="prevSlide()"
+        aria-label="Previous slide"
+      >
+        <img src="/assets/arrow.png" alt="Previous">
+      </button>
+
+      <button
+        class="control-btn"
+        (click)="nextSlide()"
+        aria-label="Next slide"
+      >
+        <img src="/assets/arrowRight.png" alt="Next">
+      </button>
+
+    </div>
+
+    <!-- Slide indicators -->
+    <div class="carousel-dots">
+
+      <button
+        *ngFor="let slide of slides; let i = index"
+        class="dot"
+        [class.active]="currentSlide === i"
+        (click)="goToSlide(i)"
+        [attr.aria-label]="'Go to slide ' + (i + 1)"
+      ></button>
+
+    </div>
+
+  </div>
+</section>

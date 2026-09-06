@@ -13,15 +13,11 @@
       <div class="hero-photo">
         <img src="/assets/hazelnut%20brownie.png" alt="Sun Dessert hazelnut brownies" (error)="onImageError($event)" />
         <span class="photo-sticker">Made<br />with love</span>
-        <div class="photo-note"><strong>Baked for sharing</strong><small>or keeping all to yourself</small></div>
+        <div class="photo-note"><strong>Order 24 hours in advance</strong><small>Good things take time</small></div>
       </div>
     </div>
 
-    <div class="proof-strip page-width">
-      <div><strong>{{ availableProducts.length || 6 }}+</strong><span>sweet treats</span></div>
-      <div><strong>100%</strong><span>made fresh</span></div>
-      <div><strong>{{ categoryCards.length }}</strong><span>ways to indulge</span></div>
-    </div>
+      <hero-carousal></hero-carousal>
 
     <section class="section page-width">
       <div class="section-heading">
@@ -31,7 +27,7 @@
       <div *ngIf="loading" class="product-grid loading-grid"><div *ngFor="let item of [1,2,3,4]" class="skeleton-card"></div></div>
       <div *ngIf="!loading && featuredProducts.length" class="product-grid">
         <article *ngFor="let product of featuredProducts; trackBy: trackById" class="product-card" (click)="openProduct(product)">
-          <div class="product-image"><img [src]="product.imageUrl" [alt]="product.name" (error)="onImageError($event)" /><span class="product-badge">Sun favorite</span></div>
+          <div class="product-image"><img [src]="product.imageUrl" [alt]="product.name" (error)="onImageError($event)" /></div>
           <div class="product-info"><div><h3>{{ product.name }}</h3><p>{{ product.category }}</p></div><strong>{{ product.price | number:'1.0-0' }} EGP</strong></div>
         </article>
       </div>
@@ -44,7 +40,7 @@
         <div class="category-grid">
           <a *ngFor="let category of categoryCards" [routerLink]="['/category', category.slug]" class="category-card">
             <img [src]="category.imageUrl" [alt]="category.name" (error)="onImageError($event)" />
-            <div><strong>{{ category.name }}</strong><span>{{ category.count }} treats <b>→</b></span></div>
+            <div><strong>{{ category.name }}</strong> <b>→</b></div>
           </a>
         </div>
       </div>
@@ -53,7 +49,7 @@
 
   <section *ngSwitchCase="'about'" class="simple-page page-width about-page">
     <div class="page-intro"><span class="eyebrow">A little about us</span><h1>Made for the<br /><em>sweet moments.</em></h1><p>Sun Dessert is a small-batch dessert kitchen in Elmenoufia, creating treats that make ordinary days feel worth celebrating.</p></div>
-    <div class="about-grid"><img src="/assets/celebrate.jpg" alt="A Sun Dessert celebration treat" (error)="onImageError($event)" /><div class="about-note"><span class="eyebrow">Our little kitchen</span><h2>Good things take time.</h2><p>Every brownie, cake, and box is made after you order, with generous ingredients and careful attention to the small details.</p><p>Whether it is a quiet afternoon treat or a full celebration, we make desserts that feel personal, warm, and worth sharing.</p><a class="button button-dark" routerLink="/products">Visit the counter <span>→</span></a></div></div>
+    <div class="about-grid"><img src="assets/about.png" alt="A Sun Dessert celebration treat" (error)="onImageError($event)" /><div class="about-note"><span class="eyebrow">Our little kitchen</span><h2>Good things take time.</h2><p>Every brownie, cake, and box is made after you order, with generous ingredients and careful attention to the small details.</p><p>Whether it is a quiet afternoon treat or a full celebration, we make desserts that feel personal, warm, and worth sharing.</p></div></div>
   </section>
 
   <section *ngSwitchCase="'products'" class="listing-page page-width">
@@ -77,7 +73,7 @@
     <div *ngIf="detailLoading" class="detail-loading"><div class="skeleton-detail"></div><div class="skeleton-copy"></div></div>
     <div *ngIf="!detailLoading && selectedProduct as product; else detailEmpty" class="detail-layout">
       <div class="detail-image"><img [src]="product.imageUrl" [alt]="product.name" (error)="onImageError($event)" /></div>
-      <div class="detail-copy"><div class="tag-row"><span class="product-badge">{{ product.category }}</span><span class="product-badge soft">Sun favorite</span></div><h1>{{ product.name }}</h1><p class="detail-description">{{ product.description }}</p><div class="detail-price">{{ product.price | number:'1.0-0' }} EGP <small>per piece / box</small></div><div class="order-line"><div class="quantity"><button type="button" (click)="decreaseQuantity()" aria-label="Decrease quantity">−</button><span>{{ quantity }}</span><button type="button" (click)="increaseQuantity()" aria-label="Increase quantity">+</button></div><button type="button" class="button button-dark order-button" (click)="startOrder(product)">Order on WhatsApp <span>→</span></button></div><p class="fresh-note">✓ Freshly prepared after confirmation</p><div class="detail-tags"><span *ngFor="let tag of product.tags">{{ tag }}</span></div></div>
+      <div class="detail-copy"><div class="tag-row"><span class="product-badge">{{ product.category }}</span></div><h1>{{ product.name }}</h1><p class="detail-description">{{ product.description }}</p><div class="detail-price">{{ product.price | number:'1.0-0' }} EGP <small>per piece </small></div><div class="order-line"><div class="quantity"><button type="button" (click)="decreaseQuantity()" aria-label="Decrease quantity">−</button><span>{{ quantity }}</span><button type="button" (click)="increaseQuantity()" aria-label="Increase quantity">+</button></div><button type="button" class="button button-dark order-button" (click)="startOrder(product)">Order on WhatsApp <span>→</span></button></div><p class="fresh-note">✓ Freshly prepared after confirmation</p></div>
     </div>
     <ng-template #detailEmpty><div class="empty-state"><h3>This dessert is not on the counter.</h3><a routerLink="/products" class="text-link">See all products <span>→</span></a></div></ng-template>
   </section>
