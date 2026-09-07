@@ -125,10 +125,11 @@
 
 
 /* Mobile */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 
   .hero {
     min-height: 450px;
+    min-width: 450px;
 
     background-size: cover;
   }
@@ -152,5 +153,11 @@
   .controls {
     gap: 1.5rem;
   }
+  
+}
 
+@media (max-width: 650px) {
+  .hero{
+    display:none;
+  }
 }
