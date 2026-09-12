@@ -158,8 +158,8 @@
 
 @media (max-width: 650px) {
   .hero {
-    aspect-ratio: 4 / 3;        
-    background-size: 100% 100%; 
+    aspect-ratio: 4 / 3.5;     
+    background-size: 100% 100%;
     height: auto;
     min-height: unset;
     width: 100%;
@@ -171,14 +171,14 @@
   }
 
   .control-btn {
-    width: 42px;   
-    height: 42px;
-    padding: 12px;
+    width: 38px;   
+    height: 38px;
+    padding: 10px; 
   }
 
   .control-btn img {
-    width: 16px;
-    height: 16px;
+    width: 14px;  
+    height: 14px;
   }
 
   .controls {
