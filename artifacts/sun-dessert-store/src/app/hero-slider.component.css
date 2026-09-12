@@ -158,13 +158,15 @@
 
 @media (max-width: 650px) {
   .hero {
-    min-height: 350px; /* often shorter on phone, not same as tablet */
+    aspect-ratio: 1 / 1;   
+    height: auto;          
+    min-height: unset;
     width: 100%;
     min-width: unset;
   }
 
   .hero-overlay {
-    padding-bottom: 12px; /* tighter since screen is smaller */
+    padding-bottom: 12px;
   }
 
   .control-btn {
