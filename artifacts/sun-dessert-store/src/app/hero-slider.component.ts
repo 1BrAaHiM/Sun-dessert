@@ -16,7 +16,7 @@ export class HeroCarousal implements OnInit, OnDestroy {
     {
       title: 'Order Our Latest Handbook',
       description: 'Enjoy beloved recipes and create delicious desserts at home.',
-      image: '/assets/offer.png'
+      image: '/assets/4PiecesCookies.jpg'
     },
 
     {

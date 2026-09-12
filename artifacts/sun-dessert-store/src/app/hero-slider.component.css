@@ -157,7 +157,28 @@
 }
 
 @media (max-width: 650px) {
-  .hero{
-    display:none;
+  .hero {
+    min-height: 350px; /* often shorter on phone, not same as tablet */
+    width: 100%;
+    min-width: unset;
+  }
+
+  .hero-overlay {
+    padding-bottom: 12px; /* tighter since screen is smaller */
+  }
+
+  .control-btn {
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+  }
+
+  .control-btn img {
+    width: 14px;
+    height: 14px;
+  }
+
+  .controls {
+    gap: 1rem;
   }
 }
