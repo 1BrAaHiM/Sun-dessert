@@ -44,7 +44,7 @@ export class StorePageComponent implements OnInit {
   quantity = 1;
   form: ProductForm = this.emptyForm();
 
-  readonly orderNumber = "201129939015";
+  readonly orderNumber = "201044279407";
   readonly categories = [
     { name: "Brownies", slug: "brownies", note: "Warm, rich, and fudgy", color: "coral" },
     { name: "Cookies", slug: "cookies", note: "Golden little comforts", color: "sage" },
