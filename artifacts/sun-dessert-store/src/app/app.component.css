@@ -361,7 +361,7 @@
     width: 100%;
   }
   .products-menu:hover .category-sheet,
-  .products-menu:focus-within .category-sheet { display: grid; }
+  .products-menu:focus-within .category-sheet { display:none; }
   .sheet-intro { display: none; }
   .category-sheet > a { padding: 9px 0; }
   .hello-link { display: none; }

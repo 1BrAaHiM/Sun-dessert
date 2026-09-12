@@ -99,21 +99,12 @@ export class ProductService {
   }
 
   private readLocalProducts(): Product[] {
-    try {
-      const saved = localStorage.getItem(this.storageKey);
-      return saved ? (JSON.parse(saved) as Product[]) : FALLBACK_PRODUCTS;
-    } catch {
       return FALLBACK_PRODUCTS;
-    }
   }
 
   private storeProducts(products: Product[]): void {
     this.productsSubject.next(products);
-    try {
-      localStorage.setItem(this.storageKey, JSON.stringify(products));
-    } catch {
-      // The API remains the source of truth when browser storage is unavailable.
-    }
+    
   }
 
   private createLocally(input: ProductInput): Product {

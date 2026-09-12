@@ -17,6 +17,7 @@ export class AppComponent {
     { name: "Brownies", slug: "brownies", note: "Warm, rich, and fudgy" },
     { name: "Cookies", slug: "cookies", note: "Golden little comforts" },
     { name: "Dessert Boxes", slug: "dessert-boxes", note: "Ready to share or gift" },
+    { name: "Ice Coffee", slug: "Ice Coffee", note: "tasty and refreshing"},
   ];
 
   readonly generalWhatsApp = "https://wa.me/201044279407";

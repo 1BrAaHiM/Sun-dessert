@@ -50,6 +50,7 @@ export class StorePageComponent implements OnInit {
     { name: "Brownies", slug: "brownies", note: "Warm, rich, and fudgy", color: "coral" },
     { name: "Cookies", slug: "cookies", note: "Golden little comforts", color: "sage" },
     { name: "Dessert Boxes", slug: "dessert-boxes", note: "Ready to share or gift", color: "lavender" },
+    { name: "Ice Coffee", slug: "Ice Coffee", note: "tasty and refreshing", color:"sun"},
   ];
 
   constructor(
